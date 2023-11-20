@@ -367,13 +367,6 @@ namespace ams::controller {
 
         R_TRY(m_virtual_memory.Read(read_addr, response.data.serial_flash_read.data, read_size));
 
-        if (read_addr == 0x6050) {
-            if (ams::mitm::GetSystemLanguage() == 10) {
-                u8 data[] = {0xff, 0xd7, 0x00, 0x00, 0x57, 0xb7, 0x00, 0x57, 0xb7, 0x00, 0x57, 0xb7};
-                std::memcpy(response.data.serial_flash_read.data, data, sizeof(data));
-            }
-        }
-
         return this->FakeHidCommandResponse(&response);
     }
 

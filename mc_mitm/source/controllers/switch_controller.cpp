@@ -89,16 +89,6 @@ namespace ams::controller {
         this->UpdateControllerState(report);
 
         auto input_report = reinterpret_cast<SwitchInputReport *>(m_input_report.data);
-        if (input_report->id == 0x21) {
-            if (input_report->type0x21.hid_command_response.id == HidCommand_SerialFlashRead) {
-                if (input_report->type0x21.hid_command_response.data.serial_flash_read.address == 0x6050) {
-                    if (ams::mitm::GetSystemLanguage() == 10) {
-                        u8 data[] = {0xff, 0xd7, 0x00, 0x00, 0x57, 0xb7, 0x00, 0x57, 0xb7, 0x00, 0x57, 0xb7};
-                        std::memcpy(input_report->type0x21.hid_command_response.data.serial_flash_read.data, data, sizeof(data));
-                    }
-                }
-            }
-        }
 
         this->ApplyButtonCombos(&input_report->buttons); 
 
